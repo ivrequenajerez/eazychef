@@ -14,6 +14,9 @@ module.exports = {
           100: "#E4A368",
           200: "#F1B98C",
         },
+        text: {
+          DEFAULT: "#32211C"
+        },
         dark: {
           DEFAULT: "#524439",
           100: "#726357",
