@@ -14,32 +14,37 @@ import { createUser } from "../../lib/appwrite";
 const SignUp = () => {
   const { setUser, setIsLogged } = useGlobalContext();
 
-  const [isSubmitting, setSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: ''
   });
 
   const submit = async () => {
+    // Confirmar si se ha ingresado la información
     if (!form.username || !form.email || !form.password) {
-      Alert.alert("Error", "Please fill in all the fields");
+      Alert.alert("Error", "Por favor rellena todos los campos");
     }
 
-    setSubmitting(true);
+    setIsSubmitting(true);
 
     try {
-      const result = await createUser(form.email, form.password, form.username);
-      setUser(result);
-      setIsLogged(true);
 
+      const result = await createUser(form.email, form.password, form.username);
+
+      // Ir a Home
       router.replace("/home");
+
     } catch (error) {
-      Alert.alert("Error", error.message);
+
+      Alert.alert('Error', error.message);
+
     } finally {
-      setSubmitting(false);
+      setIsSubmitting(false);
     }
+
   };
 
   return (
