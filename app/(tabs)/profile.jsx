@@ -1,29 +1,34 @@
 import {
   View,
-  Text,
   FlatList,
   Image, TouchableOpacity
 } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
-import { getLatestPosts, getUserPosts } from "../../lib/appwrite";
+import { getUserPosts, signOut } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
-import { useLocalSearchParams } from "expo-router";
+import InfoBox from "../../components/InfoBox";
 
 import {useGlobalContext} from '../../context/GlobalProvider'
 import { icons } from "../../constants";
 
+import { router } from "expo-router";
+
 const Profile = () => {
-  const { user, setUser, setIsLoggedIn } = useGlobalContext();
+  const { user, setUser, setIsLogged } = useGlobalContext();
   const { data: posts  } = useAppwrite(
     () => getUserPosts(user.$id)
   );
 
-  const logout = () => {
+  const logout = async () => {
+    await signOut();
+    setUser(null)
+    setIsLogged(false)
+
+    router.replace("/sign-in");
 
   }
 
@@ -53,7 +58,24 @@ const Profile = () => {
                 resizeMode="cover"
               />
             </View>
-            
+            <InfoBox
+              title={user?.username}
+              containerStyles='mt-5'
+              titleStyles="title-lg"
+            />
+            <View className="mt-5 flex-row">
+              <InfoBox
+                title={posts.length||0}
+                subtitle="Posts"
+                containerStyles='mr-10'
+                titleStyles="text-xl"
+              />
+              <InfoBox
+                title="1.2k"
+                subtitle="followers"
+                titleStyles="text-xl"
+              />
+            </View>
           </View>
         )}
         ListEmptyComponent={() => (

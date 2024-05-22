@@ -13,14 +13,12 @@ import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
   const { setUser, setIsLogged } = useGlobalContext();
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [form, setForm] = useState({
     username: '',
     email: '',
     password: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submit = async () => {
     // Confirmar si se ha ingresado la información
@@ -33,6 +31,9 @@ const SignUp = () => {
     try {
 
       const result = await createUser(form.email, form.password, form.username);
+
+      setUser(result);
+      setIsLogged(true);
 
       // Ir a Home
       router.replace("/home");

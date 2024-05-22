@@ -10,7 +10,11 @@ import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 
+import { useGlobalContext } from '../../context/GlobalProvider'
+
 const Home = () => {
+  const { user, setUser, setIsLogged } = useGlobalContext();
+
   const {data: posts, refetch} = useAppwrite(getAllPosts);
   const {data: latestPosts} = useAppwrite(getLatestPosts);
 
@@ -41,14 +45,14 @@ const Home = () => {
                   Hola! Te damos la bienvenida
                 </Text>
                 <Text className="text-2xl font-psemibold text-black">
-                  Nombre de Usuario
+                  {user?.username}
                 </Text>
               </View>
 
               <View className="mt-1.5">
                 <Image 
                   source={images.logoSmall}
-                  className="w-9 h-10"
+                  className="w-10 h-10"
                   resizeMode="contain"
                 />
               </View>
