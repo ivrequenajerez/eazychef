@@ -13,7 +13,7 @@ const SearchInput = ({ initialQuery }) => {
       <TextInput
         className="text-base mt-0.5 text-dark flex-1 font-pregular"
         value={query}
-        placeholder={"Busca un tipo de artículo"}
+        placeholder={"Busca con palabras clave"}
         placeholderTextColor="#726357"
         onChangeText={(e) => setQuery(e)}
       />

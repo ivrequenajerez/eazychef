@@ -8,7 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import SearchInput from "../../components/SearchInput";
 import EmptyState from "../../components/EmptyState";
-import { getLatestPosts, searchPosts } from "../../lib/appwrite";
+import { getAllIngredients, getLatestPosts, searchPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 import { useLocalSearchParams } from "expo-router";

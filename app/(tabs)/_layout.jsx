@@ -38,15 +38,15 @@ const TabsLayout = () => {
         }}
       >
         <Tabs.Screen
-          name="home"
+          name="home" // Nombre de la ventana de inicio (home.jsx)
           options={{
-            title: "Home",
+            title: "Inicio",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.home}
                 color={color}
-                name="Home"
+                name="Inicio"
                 focused={focused}
               />
             ),
@@ -55,13 +55,13 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="bookmark"
           options={{
-            title: "Bookmark",
+            title: "Almacén",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.bookmark}
                 color={color}
-                name="Bookmark"
+                name="Almacén"
                 focused={focused}
               />
             ),
