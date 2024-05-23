@@ -6,28 +6,34 @@ import CustomButton from "./CustomButton";
 import { Video, ResizeMode } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
-import { createVideo } from "../lib/appwrite";
+import { createIngredient, createVideo } from "../lib/appwrite";
 import { useGlobalContext } from "../context/GlobalProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const IngredienteCard = ({
   image: {
     nombre_ingrediente,
+    categoria,
     imagen_ingrediente,
-    cantidad,
+    medida,
+    precio_unidad,
+    ubicacion_almacen,
     usuario: { username },
-  },
-  visible,
+  }
 }) => {
-  const [play, setPlay] = useState(false);
   const { user } = useGlobalContext();
   const [uploading, setUploading] = useState(false);
+
   const [form, setForm] = useState({
-    title: "",
-    video: null,
-    thumbnail: null,
-    prompt: "",
+    nombre_ingrediente: "",
+    imagen_ingrediente: imagen_ingrediente,
+    cantidad: 0,
+    medida: 0,
+    categoria: "",
+    precio_unidad: 0,
+    ubicacion_almacen: "",
   });
+
   const openPicker = async (selectType) => {
     // Subir archivos de móvil y guardarlos en la BBDD, además de convertirlos en una URL
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -41,49 +47,58 @@ const IngredienteCard = ({
 
     if (!result.canceled) {
       if (selectType === "image") {
-        setForm({ ...form, thumbnail: result.assets[0] });
-      }
-      if (selectType === "video") {
-        setForm({ ...form, video: result.assets[0] });
+        setForm({ ...form, imagen_ingrediente: result.assets[0] });
       }
     }
   };
+
   const submit = async () => {
-    if (!form.prompt || !form.title || !form.thumbnail || !form.video) {
-      return Alert.alert("Please fill in all the fields");
+    if (
+      !form.categoria ||
+      !form.nombre_ingrediente ||
+      !form.imagen_ingrediente ||
+      !form.medida ||
+      !form.precio_unidad ||
+      !form.ubicacion_almacen
+    ) {
+      return Alert.alert("Todos los campos deben estar rellenos");
     }
 
     setUploading(true);
 
     try {
-      await createVideo({
+      // Intentamos crear o subir imagen
+      await createIngredient({
         ...form,
         userId: user.$id,
       });
 
       Alert.alert("Genial", "Ítem subido :)");
-      router.push("/home");
     } catch (error) {
-      Alert.alert("Error", error.message);
+      Alert.alert("Justo Aquí!", error.message);
     } finally {
       setForm({
-        title: "",
-        video: null,
-        thumbnail: null,
-        prompt: "",
+        nombre_ingrediente: "",
+        imagen_ingrediente: null,
+        cantidad: 0,
+        medida: 0,
+        categoria: "",
+        precio_unidad: 0,
+        ubicacion_almacen: "",
       });
 
       setUploading(false);
     }
   };
+
   const [elementVisible, setElementVisible] = useState(false);
 
   return (
-    <SafeAreaView className="flex-col items-center px-4 mb-0 py-0 my-0">
+    <SafeAreaView className="flex-col px-4  ">
       {elementVisible ? (
-        <View className="py-0 my-0">
+        <View className="px-4 my-0 ">
           <TouchableOpacity
-            className="items-end"
+            className="items-end "
             onPress={() => setElementVisible(!elementVisible)}
           >
             <Image
@@ -92,51 +107,35 @@ const IngredienteCard = ({
               className="w-6 h-6"
             />
           </TouchableOpacity>
-          <Text className="text-2xl text-text font-psemibold">
+          <Text className="text-3xl text-text font-pextrabold py-0">
+            {/* Nombre del ingrediente */}
             {nombre_ingrediente}
           </Text>
+          <Text className=" text-text font-pregular py-0">{categoria}</Text>
           <FormField
-            title="Nombre del Item"
-            value={form.title}
-            placeholder="Añade un nombre descriptivo"
-            handleChangeText={(e) => setForm({ ...form, title: e })}
-            otherStyles="mt-10"
+            value={form.nombre_ingrediente}
+            placeholder="Ingresa un nombre diferente"
+            handleChangeText={(e) =>
+              setForm({ ...form, nombre_ingrediente: e })
+            }
           />
-
-          <View className="mt-6 space-y-2">
-            <Text className="text-base text-dark-100 font-pmedium">
-              Sube un Vídeo del Ítem
-            </Text>
-            <TouchableOpacity onPress={() => openPicker("video")}>
-              {form.video ? (
-                <Video
-                  source={{ uri: form.video.uri }}
-                  className="w-full h-64 rounded-2xl"
-                  resizeMode={ResizeMode.COVER}
-                />
-              ) : (
-                <View className="w-full h-40 px-4 bg-secondary-100 rounded-2xl justify-center items-center">
-                  <View className="w-14 h-14 border border-dashed border-primary-100 justify-center items-center">
-                    <Image
-                      source={icons.upload}
-                      resizeMode="contain"
-                      className="w-1/2 h-1/2"
-                      style={{ tintColor: "#524439" }}
-                    />
-                  </View>
-                </View>
-              )}
-            </TouchableOpacity>
-          </View>
+          <FormField
+            value={form.categoria}
+            placeholder="Cambia la categoría"
+            handleChangeText={(e) => setForm({ ...form, categoria: e })}
+          />
+          {/* Imagen del ingrediente */}
           <View className="mt-7 space-y-2">
             <Text className="text-base text-dark-100 font-pmedium">
-              Añade una imagen de miniatura
+              Toca el recuadro para sustituir la imagen del producto:
             </Text>
-
-            <TouchableOpacity onPress={() => openPicker("image")}>
-              {form.thumbnail ? (
+            <TouchableOpacity
+              className="border border-dashed"
+              onPress={() => openPicker("image")}
+            >
+              {form.imagen_ingrediente ? (
                 <Image
-                  source={{ uri: form.thumbnail.uri }}
+                  source={{ uri: form.imagen_ingrediente }}
                   resizeMode="cover"
                   className="w-full h-64 rounded-2xl"
                 />
@@ -155,15 +154,44 @@ const IngredienteCard = ({
               )}
             </TouchableOpacity>
           </View>
+          <View className="space-y-2 mt-7">
+            <Text className="text-base text-dark font-pbold">Cantidad:</Text>
+            <Text className="text-base text-dark-100 font-pmedium">
+              {medida}Kg
+            </Text>
+            <FormField
+              value={form.medida}
+              placeholder="Ingresa una nueva cantidad"
+              handleChangeText={(e) => setForm({ ...form, medida: e })}
+            />
+          </View>
+          <View className="space-y-2 mt-7">
+            <Text className="text-base text-dark font-pbold">Precio:</Text>
+          </View>
+          <Text className="text-base text-dark-100 font-pmedium">
+            {precio_unidad}€
+          </Text>
           <FormField
-            title="AI Prompt"
-            value={form.prompt}
-            placeholder="La descripción que usaste para crear el vídeo"
-            handleChangeText={(e) => setForm({ ...form, prompt: e })}
-            otherStyles="mt-7"
+            value={form.precio_unidad}
+            placeholder="Ingresa un nuevo precio"
+            handleChangeText={(e) => setForm({ ...form, precio_unidad: e })}
           />
+          <View className="space-y-2 mt-7">
+            <Text className="text-base text-dark font-pbold">Está en:</Text>
+            <Text className="text-base text-dark-100 font-pmedium">
+              {ubicacion_almacen}
+            </Text>
+            <FormField
+              value={form.ubicacion_almacen}
+              placeholder="Cambia la ubicación"
+              handleChangeText={(e) =>
+                setForm({ ...form, ubicacion_almacen: e })
+              }
+            />
+          </View>
+          <></>
           <CustomButton
-            title="Submit & Publish"
+            title="Aceptar"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={uploading}
@@ -173,11 +201,11 @@ const IngredienteCard = ({
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => setElementVisible(true)}
-          className="flex-row gap-3 items-start"
+          className="flex-row gap-3 items-start items-center"
         >
           <View className="justify-center items-center flex-row flex-1">
-            <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center p-0.5">
-              {/* Foto de Perfil de Usuario */}
+            <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center ">
+              {/* Foto del Ingrediente */}
               <Image
                 source={{ uri: imagen_ingrediente }}
                 className="w-full h-full rounded-lg"
@@ -192,6 +220,13 @@ const IngredienteCard = ({
                 numberOfLines={1}
               >
                 {nombre_ingrediente}
+              </Text>
+              {/* Categoría del producto */}
+              <Text
+                className="text-xs text-dark-100 font-pregular"
+                numberOfLines={1}
+              >
+                <Text>{categoria}</Text>
               </Text>
               {/* Usuario que subió este Ingrediente*/}
               <Text
@@ -212,9 +247,9 @@ const IngredienteCard = ({
               />
             </TouchableOpacity>*/}
             <View className="pt-2 justify-center items-center mb-39">
-              {/* Indicador de cantidad de ingredientes que hay */}
+              {/* Cantidad en KG por ahora solo en KG */}
               <Text className="justify-center items-center text-xl ">
-                Hay {cantidad} items
+                {medida}Kg
               </Text>
             </View>
             {/*<TouchableOpacity className="pt-2">

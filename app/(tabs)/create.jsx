@@ -73,7 +73,7 @@ const Create = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView className="px-4 my-6">
-        <Text className="text-2xl text-text font-psemibold">Sube un Item!</Text>
+        <Text className="text-2xl text-text font-psemibold">Nuevo Ítem para la Carta</Text>
         <FormField
           title="Nombre del Item"
           value={form.title}
@@ -82,34 +82,10 @@ const Create = () => {
           otherStyles="mt-10"
         />
 
-        <View className="mt-6 space-y-2">
-          <Text className="text-base text-dark-100 font-pmedium">
-            Sube un Vídeo del Ítem
-          </Text>
-          <TouchableOpacity onPress={() => openPicker("video")}>
-            {form.video ? (
-              <Video
-                source={{ uri: form.video.uri }}
-                className="w-full h-64 rounded-2xl"
-                resizeMode={ResizeMode.COVER}
-              />
-            ) : (
-              <View className="w-full h-40 px-4 bg-secondary-100 rounded-2xl justify-center items-center">
-                <View className="w-14 h-14 border border-dashed border-primary-100 justify-center items-center">
-                  <Image
-                    source={icons.upload}
-                    resizeMode="contain"
-                    className="w-1/2 h-1/2"
-                    style={{ tintColor: "#524439" }}
-                  />
-                </View>
-              </View>
-            )}
-          </TouchableOpacity>
-        </View>
+        
         <View className="mt-7 space-y-2">
           <Text className="text-base text-dark-100 font-pmedium">
-            Añade una imagen de miniatura
+            Añade una imagen
           </Text>
 
           <TouchableOpacity onPress={() => openPicker("image")}>
@@ -134,15 +110,40 @@ const Create = () => {
             )}
           </TouchableOpacity>
         </View>
+        <View className="mt-6 space-y-2">
+          <Text className="text-base text-dark-100 font-pmedium">
+            Sube un Vídeo de la receta
+          </Text>
+          <TouchableOpacity onPress={() => openPicker("video")}>
+            {form.video ? (
+              <Video
+                source={{ uri: form.video.uri }}
+                className="w-full h-64 rounded-2xl"
+                resizeMode={ResizeMode.COVER}
+              />
+            ) : (
+              <View className="w-full h-40 px-4 bg-secondary-100 rounded-2xl justify-center items-center">
+                <View className="w-14 h-14 border border-dashed border-primary-100 justify-center items-center">
+                  <Image
+                    source={icons.upload}
+                    resizeMode="contain"
+                    className="w-1/2 h-1/2"
+                    style={{ tintColor: "#524439" }}
+                  />
+                </View>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
         <FormField
-          title="AI Prompt"
+          title="Descripción"
           value={form.prompt}
-          placeholder="La descripción que usaste para crear el vídeo"
+          placeholder="Palabras clave para el ítem"
           handleChangeText={(e) => setForm({ ...form, prompt: e })}
           otherStyles="mt-7"
         />
         <CustomButton
-          title="Submit & Publish"
+          title="Publicar"
           handlePress={submit}
           containerStyles="mt-7"
           isLoading={uploading}
