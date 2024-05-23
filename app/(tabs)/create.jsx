@@ -73,9 +73,9 @@ const Create = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView className="px-4 my-6">
-        <Text className="text-2xl text-text font-psemibold">Nuevo Ítem para la Carta</Text>
+        <Text className="text-2xl text-text font-psemibold">Nuevo Plato para la Carta</Text>
         <FormField
-          title="Nombre del Item"
+          title="Nombre del Plato"
           value={form.title}
           placeholder="Añade un nombre descriptivo"
           handleChangeText={(e) => setForm({ ...form, title: e })}
@@ -138,7 +138,7 @@ const Create = () => {
         <FormField
           title="Descripción"
           value={form.prompt}
-          placeholder="Palabras clave para el ítem"
+          placeholder="Palabras clave para el plato"
           handleChangeText={(e) => setForm({ ...form, prompt: e })}
           otherStyles="mt-7"
         />

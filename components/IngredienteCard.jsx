@@ -15,24 +15,60 @@ const IngredienteCard = ({
     nombre_ingrediente,
     categoria,
     imagen_ingrediente,
+    cantidad,
     medida,
     precio_unidad,
     ubicacion_almacen,
     usuario: { username },
   }
 }) => {
+
+  const [image, setImage] = useState();
+  const uploadImage = async () => {
+    try {
+      await ImagePicker.requestCameraPermissionsAsync();
+      let result = await ImagePicker.launchCameraAsync({
+        cameraType: ImagePicker.CameraType.back,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        // save image
+        await saveImage(result.assets[0].uri);
+      }
+
+    } catch (error) {
+      Alert.alert("Error al subir la imagen" + error.message)
+    }
+  }
+
+  const saveImage = async (imagen_ingrediente) => {
+    try {
+      // UPDATE - actualiza
+      setImage(imagen_ingrediente);
+    } catch (error) {
+     throw error; 
+    }
+  }
+
   const { user } = useGlobalContext();
+
   const [uploading, setUploading] = useState(false);
 
+  {/* initialState */}
   const [form, setForm] = useState({
-    nombre_ingrediente: "",
+    nombre_ingrediente: nombre_ingrediente,
     imagen_ingrediente: imagen_ingrediente,
-    cantidad: 0,
-    medida: 0,
-    categoria: "",
-    precio_unidad: 0,
-    ubicacion_almacen: "",
+    cantidad: cantidad,
+    categoria: categoria,
+    ubicacion_almacen: ubicacion_almacen,
   });
+
+  const handleChangeText = (value, name) => {
+    setForm({...form, [name]: value})
+  }
 
   const openPicker = async (selectType) => {
     // Subir archivos de móvil y guardarlos en la BBDD, además de convertirlos en una URL
@@ -57,8 +93,6 @@ const IngredienteCard = ({
       !form.categoria ||
       !form.nombre_ingrediente ||
       !form.imagen_ingrediente ||
-      !form.medida ||
-      !form.precio_unidad ||
       !form.ubicacion_almacen
     ) {
       return Alert.alert("Todos los campos deben estar rellenos");
@@ -79,11 +113,9 @@ const IngredienteCard = ({
     } finally {
       setForm({
         nombre_ingrediente: "",
-        imagen_ingrediente: null,
+        imagen_ingrediente: imagen_ingrediente,
         cantidad: 0,
-        medida: 0,
         categoria: "",
-        precio_unidad: 0,
         ubicacion_almacen: "",
       });
 
@@ -107,8 +139,8 @@ const IngredienteCard = ({
               className="w-6 h-6"
             />
           </TouchableOpacity>
+          {/* Nombre del ingrediente */}
           <Text className="text-3xl text-text font-pextrabold py-0">
-            {/* Nombre del ingrediente */}
             {nombre_ingrediente}
           </Text>
           <Text className=" text-text font-pregular py-0">{categoria}</Text>
@@ -119,27 +151,35 @@ const IngredienteCard = ({
               setForm({ ...form, nombre_ingrediente: e })
             }
           />
+          {/* FIN Nombre del ingrediente */}
+          {/* -------------------------- */}
+          {/* Categoría del ingrediente */}
           <FormField
             value={form.categoria}
             placeholder="Cambia la categoría"
             handleChangeText={(e) => setForm({ ...form, categoria: e })}
           />
-          {/* Imagen del ingrediente */}
+          {/* FIN Categoría del ingrediente */}
+          {/* -------------------------- */}
+          {/* Imagen del ingrediente 
           <View className="mt-7 space-y-2">
             <Text className="text-base text-dark-100 font-pmedium">
               Toca el recuadro para sustituir la imagen del producto:
             </Text>
             <TouchableOpacity
               className="border border-dashed"
-              onPress={() => openPicker("image")}
+              onPress={() => uploadImage()}
             >
-              {form.imagen_ingrediente ? (
+              {
+              
+              form.imagen_ingrediente ? (
                 <Image
-                  source={{ uri: form.imagen_ingrediente }}
+                  source={form.imagen_ingrediente.uri}
                   resizeMode="cover"
                   className="w-full h-64 rounded-2xl"
                 />
               ) : (
+                
                 <View className="w-full h-16 px-4 bg-secondary-100 rounded-2xl justify-center items-center border-2 border-black-200 flex-row space-x-2">
                   <Image
                     source={icons.upload}
@@ -153,17 +193,12 @@ const IngredienteCard = ({
                 </View>
               )}
             </TouchableOpacity>
-          </View>
+          </View>*/}
           <View className="space-y-2 mt-7">
             <Text className="text-base text-dark font-pbold">Cantidad:</Text>
             <Text className="text-base text-dark-100 font-pmedium">
               {medida}Kg
             </Text>
-            <FormField
-              value={form.medida}
-              placeholder="Ingresa una nueva cantidad"
-              handleChangeText={(e) => setForm({ ...form, medida: e })}
-            />
           </View>
           <View className="space-y-2 mt-7">
             <Text className="text-base text-dark font-pbold">Precio:</Text>
@@ -171,11 +206,6 @@ const IngredienteCard = ({
           <Text className="text-base text-dark-100 font-pmedium">
             {precio_unidad}€
           </Text>
-          <FormField
-            value={form.precio_unidad}
-            placeholder="Ingresa un nuevo precio"
-            handleChangeText={(e) => setForm({ ...form, precio_unidad: e })}
-          />
           <View className="space-y-2 mt-7">
             <Text className="text-base text-dark font-pbold">Está en:</Text>
             <Text className="text-base text-dark-100 font-pmedium">

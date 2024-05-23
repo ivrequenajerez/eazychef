@@ -16,13 +16,14 @@ const SignUp = () => {
   const [form, setForm] = useState({
     username: '',
     email: '',
-    password: ''
+    password: '',
+    Rol: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const submit = async () => {
-    // Confirmar si se ha ingresado la información
-    if (!form.username || !form.email || !form.password) {
+    // Si no se rellena, salta error
+    if (!form.username || !form.email || !form.password || !form.Rol) {
       Alert.alert("Error", "Por favor rellena todos los campos");
     }
 
@@ -30,7 +31,7 @@ const SignUp = () => {
 
     try {
 
-      const result = await createUser(form.email, form.password, form.username);
+      const result = await createUser(form.email, form.password, form.username, form.Rol);
 
       setUser(result);
       setIsLogged(true);
@@ -62,12 +63,12 @@ const SignUp = () => {
 
           <View className="w-full items-center">
             <Text className="text-3xl text-black text-semibold mt-6 font-psemibold">
-              Sign up
+              Regístrate
             </Text>
           </View>
 
           <FormField
-            title="Username"
+            title="Nombre"
             value={form.username}
             handleChangeText={(e) => setForm({ ...form, username: e })}
             otherStyles="mt-10"
@@ -81,14 +82,20 @@ const SignUp = () => {
             keyboardType="email-address"
           />
           <FormField
-            title="Password"
+            title="Contraseña"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
           />
+          <FormField
+            title="Puesto en Restaurante"
+            value={form.Rol}
+            handleChangeText={(e) => setForm({ ...form, Rol: e })}
+            otherStyles="mt-7"
+          />
 
           <CustomButton
-            title="Sign Up"
+            title="Registrarse"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -96,13 +103,13 @@ const SignUp = () => {
 
           <View className="justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-dark-100 font-pregular">
-              Have an account already?
+              ¿Ya tienes una cuenta?
             </Text>
             <Link
               href="/sign-in"
               className="text-lg font-psemibold text-secondary"
             >
-              Sign In
+              Inicia Sesión
             </Link>
           </View>
         </View>

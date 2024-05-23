@@ -66,7 +66,7 @@ const Home = () => {
 
             <View className="w-full flex-1 pt-5 pb-8">
               <Text className="text-text text-lg font-pregular mb-3">
-                Últimos Items
+                Nuevos platos en la carta
               </Text>
               <Trending posts={latestPosts ?? []} />
             </View>

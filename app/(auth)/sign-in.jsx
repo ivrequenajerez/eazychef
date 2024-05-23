@@ -57,10 +57,10 @@ const SignIn = () => {
 
           <View className="w-full items-center">
             <Text className="text-3xl text-black text-semibold mt-6 font-psemibold">
-              Log in
+              Inicia sesión
             </Text>
             <Text className="text-1xl text-black text-extralight font-pextralight">
-              Sign in to continue
+              Introduce tus datos para continuar
             </Text>
           </View>
 
@@ -72,14 +72,14 @@ const SignIn = () => {
             keyboardType="email-address"
           />
           <FormField
-            title="Password"
+            title="Contraseña"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7"
           />
 
           <CustomButton
-            title="Sign In"
+            title="Entrar"
             handlePress={submit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
@@ -87,13 +87,13 @@ const SignIn = () => {
 
           <View className="justify-center pt-5 flex-row gap-2">
             <Text className="text-lg text-dark-100 font-pregular">
-              Don't have account?
+              ¿No tienes una cuenta?
             </Text>
             <Link
               href="/sign-up"
               className="text-lg font-psemibold text-secondary"
             >
-              Sign Up
+              Regístrate
             </Link>
           </View>
         </View>

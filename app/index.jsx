@@ -29,18 +29,18 @@ export default function App() {
           />
           <View className="relative mt-5">
             <Text className="text-3xl text-black font-bold text-center">
-              Discover Endless Possibilities with{" "}
+              Una gestión organizada del restaurante con{" "}
               <Text className="text-secondary-100">Eazy Chef</Text>
             </Text>
           </View>
 
           <Text className="text-sm font-pregular text-text mt-7 text-center">
-            Where creativity meets innovation: embark on a journey of limitless
-            exploration with Eazy Chef
+            Donde la creatividad se encuentra con la innovación: un
+            viaje de exploración ilimitada con Eazy Chef
           </Text>
 
           <CustomButton
-            title="Continue with Email"
+            title="Continúa con tu Email"
             handlePress={() => router.push("/sign-in")}
             containerStyles="w-full mt-7"
           />

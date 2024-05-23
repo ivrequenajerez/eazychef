@@ -31,6 +31,7 @@ const VideoCard = ({
             >
               {title}
             </Text>
+            {/** Si le das click al título que vaya a los ingredientes que tiene... */}
             <Text
               className="text-xs text-dark-100 font-pregular"
               numberOfLines={1}
@@ -41,12 +42,12 @@ const VideoCard = ({
         </View>
 
         <View className="pt-2">
-          <Image
+          {/*<Image
             source={icons.menu}
             className="w-6 h-6"
             resizeMode="contain"
             style={{ tintColor: "#32211C" }}
-          />
+          />*/}
         </View>
       </View>
 
