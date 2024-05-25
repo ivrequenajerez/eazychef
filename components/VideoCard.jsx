@@ -12,10 +12,7 @@ import { ResizeMode, Video } from "expo-av";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
 import * as ImagePicker from "expo-image-picker";
-import {
-  deletePlato,
-  updatePlato,
-} from "../lib/appwrite";
+import { deletePlato, getAllPosts, updatePlato } from "../lib/appwrite";
 
 const VideoCard = ({
   video: {
@@ -26,27 +23,57 @@ const VideoCard = ({
     creator: { username, avatar },
   },
 }) => {
- 
-  const form = { title, thumbnail, video };
-
+  {
+    /* Para reproducir vídeos... */
+  }
   const [play, setPlay] = useState(false);
-
+  {
+    /* Para abrir y cerrar el modal... */
+  }
   const [isModalVisible, setIsModalVisible] = useState(false);
-
-   {/*  */}
+  {
+    /* Para el formulario del modal... */
+  }
+  const form = { title, thumbnail, video };
   const [platos, setPlato] = useState(video.title);
 
   const handleDelete = async () => {
     await updatePlato($id, { title: title });
     await deletePlato($id);
 
-    // Aquí puedes agregar lógica adicional, como actualizar la lista de platos en el estado padre
+    // Aquí podemos agregar lógica adicional, como actualizar la lista de platos en el estado padre
   };
 
-  const handleUpdate = async () => {
-    // Lógica para actualizar el plato en la base de datos
-    // Por ejemplo:
-    // await updatePlato(plato.$id, { name: title });
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = async () => {
+    const platosList = await getAllPosts();
+    setPlato(platosList);
+  };
+
+  const [editingPlato, setEditingPlato] = useState(null);
+  const [editingText, setEditingText] = useState("");
+
+  const startEditing = (video) => {
+    setEditingPlato(video);
+    setEditingPlato(video.title);
+  };
+
+  const saveEditing = async () => {
+    if (editingText.trim()) {
+      await updatePlato($id, { title: editingText }, $id);
+      setEditingPlato(null);
+      setEditingText("");
+      fetchTasks();
+    }
+  };
+
+  const cancelEditing = () => {
+    setEditingPlato(null);
+    setEditingText("");
+    setIsModalVisible(false);
   };
 
   const uploadImage = async () => {
@@ -69,12 +96,6 @@ const VideoCard = ({
       }
     } catch (error) {
       Alert.alert("Error al subir la imagen" + error.message);
-    }
-  };
-
-  const saveChangesPlato = async () => {
-    {
-      /* Guardar los cambios realizados; actualizar la imagen y actualizar el nombre del plato */
     }
   };
 
@@ -125,17 +146,17 @@ const VideoCard = ({
               animationType="slide"
               transparent={true}
             >
-              <View className="flex-1 justify-center items-center w-full p-3 ">
-                <View className="bg-white p-5 rounded-lg shadow-lg flex w-full flex-row justify-center items-center">
+              <View className="flex-1 justify-center items-center w-full p-1 ">
+                <View className="bg-white p-5 rounded-lg shadow-lg flex w-full flex-row justify-center items-center border border-dark">
                   {/* Aquí Debe hacer click y abrir la cámara para cambiar la thumbnail */}
                   <TouchableOpacity
-                    className="border border-dashed mr-2"
+                    className="border border-dashed mr-2 mt-4"
                     onPress={() => uploadImage()}
                   >
                     {{ uri: thumbnail } ? (
                       <Image
                         source={{ uri: thumbnail }}
-                        className="w-20 h-20 rounded-xl"
+                        className="w-20 h-20 rounded-xl "
                         resizeMode="cover"
                       />
                     ) : (
@@ -149,26 +170,40 @@ const VideoCard = ({
                       </View>
                     )}
                   </TouchableOpacity>
+                  
                   <FormField
                     placeholder={title}
-                    value={title}
-                    onChangeText={setPlato}
-                    otherStyles="w-60 pr-5"
+                    value={editingText}
+                    handleChangeText={setEditingText}
+                    otherStyles="w-60 pr-2 mt-2"
                   />
+
                   <View>
-                    <CustomButton
-                      title="Guardar"
-                      /* Al hacer click se debe Actualizar el title del plato */
-                      handlePress={() => setIsModalVisible(false)}
-                      containerStyles="bg-success "
-                      textStyles="text-xs p-2"
+                  <TouchableOpacity
+                    className="items-end pb-5"
+                    onPress={() => setIsModalVisible(false)}
+                  >
+                    <Image
+                      source={icons.cerrar}
+                      resizeMode="contain"
+                      className="w-4 h-4"
                     />
+                  </TouchableOpacity>
+                    {editingText && (
+                      <CustomButton
+                        title="Guardar"
+                        /* Al hacer click se debe Actualizar el title del plato */
+                        handlePress={saveEditing}
+                        containerStyles="mb-2 bg-success "
+                        textStyles="text-xs justify-center items-center p-1"
+                      />
+                    )}
                     <CustomButton
                       title="Borrar"
                       /* Al hacer click se debe borrar */
                       handlePress={handleDelete}
-                      containerStyles="mt-3 bg-warning "
-                      textStyles="text-xs p-2"
+                      containerStyles="mb-1 bg-warning w-16 "
+                      textStyles="text-xs justify-center items-center p-1"
                     />
                   </View>
                 </View>
