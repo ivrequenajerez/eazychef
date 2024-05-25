@@ -26,6 +26,7 @@ const IngredienteCard = ({
   const [image, setImage] = useState();
   const uploadImage = async () => {
     try {
+      {/** Opción de Abrir La Cámara */}
       await ImagePicker.requestCameraPermissionsAsync();
       let result = await ImagePicker.launchCameraAsync({
         cameraType: ImagePicker.CameraType.back,

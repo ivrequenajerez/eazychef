@@ -8,6 +8,7 @@ import GlobalProvider from "../context/GlobalProvider";
 SplashScreen.preventAutoHideAsync();
 
 const RooyLayout = () => {
+  // Tipografía Poppins con sus diferentes tipos
   const [fontsLoaded, error] = useFonts({
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
     "Poppins-ExtraLight": require("../assets/fonts/Poppins-ExtraLight.ttf"),
@@ -21,6 +22,7 @@ const RooyLayout = () => {
   });
 
   useEffect(() => {
+
     if (error) throw error;
 
     if (fontsLoaded) SplashScreen.hideAsync();
@@ -38,6 +40,7 @@ const RooyLayout = () => {
       </Stack>
     </GlobalProvider>
   );
+  
 };
 
 export default RooyLayout;

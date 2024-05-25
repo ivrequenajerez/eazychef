@@ -14,6 +14,8 @@ export default function App() {
   if (!isLoading && isLoggedIn) return <Redirect href="/home" />;
 
   return (
+    // Color de fondo sea el color "primary"
+    // altura completa
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="w-full justify-center items-center min-h-[85vh] px-4">
@@ -41,9 +43,11 @@ export default function App() {
 
           <CustomButton
             title="Continúa con tu Email"
+            // Al presionar el botón navegas hasta la ventana 'sign-in'
             handlePress={() => router.push("/sign-in")}
             containerStyles="w-full mt-7"
           />
+
         </View>
       </ScrollView>
     </SafeAreaView>
