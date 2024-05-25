@@ -6,27 +6,48 @@ import {
   Modal,
   Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { icons, images } from "../constants";
 import { ResizeMode, Video } from "expo-av";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
 import * as ImagePicker from "expo-image-picker";
-import { deleteVideo } from "../lib/appwrite";
+import {
+  deletePlato,
+  updatePlato,
+} from "../lib/appwrite";
 
 const VideoCard = ({
   video: {
+    $id,
     title,
     thumbnail,
     video,
     creator: { username, avatar },
   },
 }) => {
+ 
   const form = { title, thumbnail, video };
 
   const [play, setPlay] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+   {/*  */}
+  const [platos, setPlato] = useState(video.title);
+
+  const handleDelete = async () => {
+    await updatePlato($id, { title: title });
+    await deletePlato($id);
+
+    // Aquí puedes agregar lógica adicional, como actualizar la lista de platos en el estado padre
+  };
+
+  const handleUpdate = async () => {
+    // Lógica para actualizar el plato en la base de datos
+    // Por ejemplo:
+    // await updatePlato(plato.$id, { name: title });
+  };
 
   const uploadImage = async () => {
     try {
@@ -54,18 +75,6 @@ const VideoCard = ({
   const saveChangesPlato = async () => {
     {
       /* Guardar los cambios realizados; actualizar la imagen y actualizar el nombre del plato */
-    }
-  };
-  const deletePlato = async () => {
-    {
-      /* Eliminar el plato en cuestión; eliminar el plato entero */
-    }
-    try {
-      await deleteVideo(title, form);
-      // Opcional: Manejar la respuesta, actualizar el estado o notificar al usuario
-      console.log(`El video con el título ${title} ha sido eliminado.`);
-    } catch (error) {
-      console.error(`Error al eliminar el video: ${error.message}`);
     }
   };
 
@@ -140,19 +149,24 @@ const VideoCard = ({
                       </View>
                     )}
                   </TouchableOpacity>
-                  <FormField placeholder={title} otherStyles="w-60 pr-5" />
+                  <FormField
+                    placeholder={title}
+                    value={title}
+                    onChangeText={setPlato}
+                    otherStyles="w-60 pr-5"
+                  />
                   <View>
                     <CustomButton
                       title="Guardar"
                       /* Al hacer click se debe Actualizar el title del plato */
-                      handlePress={() => saveChangesPlato()}
+                      handlePress={() => setIsModalVisible(false)}
                       containerStyles="bg-success "
                       textStyles="text-xs p-2"
                     />
                     <CustomButton
                       title="Borrar"
                       /* Al hacer click se debe borrar */
-                      handlePress={deletePlato}
+                      handlePress={handleDelete}
                       containerStyles="mt-3 bg-warning "
                       textStyles="text-xs p-2"
                     />
