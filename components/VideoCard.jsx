@@ -130,7 +130,7 @@ const VideoCard = ({
             </Text>
           </View>
           <TouchableOpacity onPress={() => setIsModalVisible(true)}>
-            {/* Si setIsModalVisible(true) Entonces poner el fondo de /home color oscuro */}
+            {/* ... Agregar: Si setIsModalVisible(true) Entonces poner el fondo de /home color oscuro */}
             <Image
               source={icons.edit}
               resizeMode="contain"

@@ -51,6 +51,7 @@ const Bookmark = () => {
     nombre_ingrediente: "",
     imagen_ingrediente: null,
     medida: "",
+    cantidad: "",
     precio_unidad: "",
     categoria: "",
     ubicacion_almacen: "",
@@ -81,6 +82,7 @@ const Bookmark = () => {
       !form.nombre_ingrediente ||
       !form.imagen_ingrediente ||
       !form.medida ||
+      !form.cantidad ||
       !form.precio_unidad ||
       !form.categoria ||
       !form.ubicacion_almacen
@@ -106,6 +108,7 @@ const Bookmark = () => {
         nombre_ingrediente: "",
         imagen_ingrediente: null,
         medida: "",
+        cantidad: "",
         precio_unidad: "",
         categoria: "",
         ubicacion_almacen: "",
@@ -123,7 +126,7 @@ const Bookmark = () => {
           keyExtractor={(item) => item.$id}
           renderItem={({ item }) => <IngredienteCard image={item} />}
           ListHeaderComponent={() => (
-            <View className="my-6 px-4 space-y-6 ">
+            <View className="my-6 px-4 space-y-6 mb-[0px] pb-[0px] ">
               {/* Hacer que al scrollear el botón de añadir se quede fijo arriba... */}
               <View className="flex-row justify-end items-center mr-6">
                 <TouchableOpacity onPress={() => setElementVisible(false)}>
@@ -223,8 +226,13 @@ const Bookmark = () => {
           />
           {/* FIN Categoría del ingrediente */}
           <FormField
+            value={form.cantidad}
+            placeholder="Cantidad"
+            handleChangeText={(e) => setForm({ ...form, cantidad: e })}
+          />
+          <FormField
             value={form.medida}
-            placeholder="Cantidad (Kg)"
+            placeholder="Cantidad (kg, l, ml...)"
             handleChangeText={(e) => setForm({ ...form, medida: e })}
           />
           <FormField
