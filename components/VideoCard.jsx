@@ -23,6 +23,9 @@ const VideoCard = ({
     creator: { username, avatar },
   },
 }) => {
+  const [editingPlato, setEditingPlato] = useState(null);
+  const [editingText, setEditingText] = useState("");
+  const [editingImage, setEditingImage] = useState(null);
   {
     /* Para reproducir vídeos... */
   }
@@ -34,7 +37,11 @@ const VideoCard = ({
   {
     /* Para el formulario del modal... */
   }
-  const form = { title, thumbnail, video };
+  const [form, setForm] = useState({
+    title,
+    video: null,
+    thumbnail: null,
+  });
   const [platos, setPlato] = useState(video.title);
 
   const handleDelete = async () => {
@@ -53,9 +60,6 @@ const VideoCard = ({
     setPlato(platosList);
   };
 
-  const [editingPlato, setEditingPlato] = useState(null);
-  const [editingText, setEditingText] = useState("");
-
   const startEditing = (video) => {
     setEditingPlato(video);
     setEditingPlato(video.title);
@@ -63,9 +67,17 @@ const VideoCard = ({
 
   const saveEditing = async () => {
     if (editingText.trim()) {
-      await updatePlato($id, { title: editingText }, $id);
+      setEditingPlato(video);
+
+      const updatedPlato = {
+        title: editingText,
+        thumbnail: form.thumbnail.uri,
+      };
+
+      await updatePlato($id, updatedPlato);
       setEditingPlato(null);
       setEditingText("");
+      setEditingImage(null);
       fetchTasks();
     }
   };
@@ -76,26 +88,26 @@ const VideoCard = ({
     setIsModalVisible(false);
   };
 
-  const uploadImage = async () => {
-    try {
-      {
-        /** Opción de Abrir La Cámara */
+  const uploadImage = async (selectType) => {
+    // Subir archivos de móvil y guardarlos en la BBDD, además de convertirlos en una URL
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes:
+        selectType === "image"
+          ? ImagePicker.MediaTypeOptions.Images
+          : ImagePicker.MediaTypeOptions.Videos,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (result && !result.canceled) {
+      setEditingImage(result);
+    }
+    if (!result.canceled) {
+      if (selectType === "image") {
+        setForm({ ...form, thumbnail: result.assets[0] });
       }
-      await ImagePicker.requestCameraPermissionsAsync();
-
-      let result = await ImagePicker.launchCameraAsync({
-        cameraType: ImagePicker.CameraType.back,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
-
-      if (!result.canceled) {
-        // save image
-        await saveImage(result.assets[0].uri);
+      if (selectType === "video") {
+        setForm({ ...form, video: result.assets[0] });
       }
-    } catch (error) {
-      Alert.alert("Error al subir la imagen" + error.message);
     }
   };
 
@@ -150,27 +162,27 @@ const VideoCard = ({
                 <View className="bg-white p-5 rounded-lg shadow-lg flex w-full flex-row justify-center items-center border border-dark">
                   {/* Aquí Debe hacer click y abrir la cámara para cambiar la thumbnail */}
                   <TouchableOpacity
-                    className="border border-dashed mr-2 mt-4"
-                    onPress={() => uploadImage()}
+                    className="border border-dashed mr-2 mt-4 "
+                    onPress={() => uploadImage("image")}
                   >
-                    {{ uri: thumbnail } ? (
+                    {form.thumbnail ? (
                       <Image
-                        source={{ uri: thumbnail }}
+                        source={{ uri: form.thumbnail.uri }}
                         className="w-20 h-20 rounded-xl "
                         resizeMode="cover"
                       />
                     ) : (
-                      <View className="w-full h-16 px-4 bg-secondary-100 rounded-2xl justify-center items-center border-2 border-black-200 flex-row space-x-2">
+                      <View className="w-20 h-20 px-4 bg-secondary-100 rounded-2xl justify-center items-center border-2 border-black-200 flex-row space-x-2">
                         <Image
                           source={icons.upload}
                           resizeMode="contain"
-                          className="w-20 h-20 rounded-xl"
+                          className="w-10 h-10 rounded-xl"
                           style={{ tintColor: "#524439" }}
                         />
                       </View>
                     )}
                   </TouchableOpacity>
-                  
+
                   <FormField
                     placeholder={title}
                     value={editingText}
@@ -179,16 +191,16 @@ const VideoCard = ({
                   />
 
                   <View>
-                  <TouchableOpacity
-                    className="items-end pb-5"
-                    onPress={() => setIsModalVisible(false)}
-                  >
-                    <Image
-                      source={icons.cerrar}
-                      resizeMode="contain"
-                      className="w-4 h-4"
-                    />
-                  </TouchableOpacity>
+                    <TouchableOpacity
+                      className="items-end pb-5"
+                      onPress={() => cancelEditing()}
+                    >
+                      <Image
+                        source={icons.cerrar}
+                        resizeMode="contain"
+                        className="w-4 h-4"
+                      />
+                    </TouchableOpacity>
                     {editingText && (
                       <CustomButton
                         title="Guardar"
