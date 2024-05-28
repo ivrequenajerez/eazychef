@@ -13,6 +13,7 @@ import CustomButton from "./CustomButton";
 import FormField from "./FormField";
 import * as ImagePicker from "expo-image-picker";
 import { deletePlato, getAllPosts, updatePlato } from "../lib/appwrite";
+import { Link, router } from "expo-router";
 
 const VideoCard = ({
   video: {
@@ -26,23 +27,15 @@ const VideoCard = ({
   const [editingPlato, setEditingPlato] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [editingImage, setEditingImage] = useState(null);
-  {
-    /* Para reproducir vídeos... */
-  }
+  const [platos, setPlato] = useState(video.title);
   const [play, setPlay] = useState(false);
-  {
-    /* Para abrir y cerrar el modal... */
-  }
   const [isModalVisible, setIsModalVisible] = useState(false);
-  {
-    /* Para el formulario del modal... */
-  }
+
   const [form, setForm] = useState({
     title,
     video: null,
     thumbnail: null,
   });
-  const [platos, setPlato] = useState(video.title);
 
   const handleDelete = async () => {
     await updatePlato($id, { title: title });
@@ -111,13 +104,27 @@ const VideoCard = ({
     }
   };
 
+  {
+    /** 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const ir = async () => {
+    setIsSubmitting(true);
+    try {
+      // Ir a Home
+      router.replace("vent/infoPlato");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    }
+  };
+*/
+  }
+
   return (
-    <View className="flex-col items-center px-4 mb-14">
+    <View className="flex-col items-center px-4 mb-14 ">
       <View className="flex-row gap-3 items-start">
-        {/** Si le das click a la tarjeta, se va a la info del plato */}
         <View className="justify-center items-center flex-row flex-1">
           {/* Imagen de Perfil */}
-          <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center p-0.5">
+          <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center p-0.5 ">
             <Image
               source={{ uri: avatar }}
               className="w-full h-full rounded-lg"
@@ -125,22 +132,23 @@ const VideoCard = ({
             />
           </View>
           {/* Info de Plato y persona que lo publicó */}
-          <View className="justify-center flex-1 ml-3 gap-y-1">
-            {/* Título */}
-            <Text
-              className="text-text font-psemibold text-sm"
-              numberOfLines={1}
-            >
-              {title}
-            </Text>
-            {/* Nombre de Usuario */}
-            <Text
-              className="text-xs text-dark-100 font-pregular"
-              numberOfLines={1}
-            >
-              {username}
-            </Text>
-          </View>
+            <TouchableOpacity className="justify-center flex-1 ml-3 gap-y-1">
+              {/* Título */}
+              <Text
+                className="text-text font-psemibold text-sm"
+                numberOfLines={1}
+              >
+                {title}
+              </Text>
+              {/* Nombre de Usuario */}
+              <Text
+                className="text-xs text-dark-100 font-pregular"
+                numberOfLines={1}
+              >
+                {username}
+              </Text>
+            </TouchableOpacity>
+          {/* Icono de Editar */}
           <TouchableOpacity onPress={() => setIsModalVisible(true)}>
             {/* ... Agregar: Si setIsModalVisible(true) Entonces poner el fondo de /home color oscuro */}
             <Image
@@ -223,7 +231,6 @@ const VideoCard = ({
             </Modal>
           </View>
         </View>
-
         <View className="pt-2">
           {/*<Image
             source={icons.menu}
@@ -233,7 +240,6 @@ const VideoCard = ({
           />*/}
         </View>
       </View>
-
       {play ? (
         <Video
           source={{ uri: video }}

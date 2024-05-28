@@ -102,7 +102,11 @@ const Bookmark = () => {
       Alert.alert("Genial", "Ítem subido :)");
 
     } catch (error) {
-      Alert.alert('Error al crear el producto', error.message);
+      if (error.message.includes("the current user is not authorized")) {
+        Alert.alert("No tiene permiso", "No estás autorizado para crear un producto");
+      } else {
+        Alert.alert("Error al crear el producto", error.message);
+      }
     } finally {
       setForm({
         nombre_ingrediente: "",

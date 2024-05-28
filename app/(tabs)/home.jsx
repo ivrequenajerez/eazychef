@@ -5,6 +5,7 @@ import {
   Image,
   RefreshControl,
   Alert,
+  Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,13 +14,38 @@ import { images } from "../../constants";
 import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
-import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
+import {
+  getAllPosts,
+  getLatestPosts,
+  listTeams,
+  teams,
+} from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 
 import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
+  /* Listar Teams - Roles */
+  const [teamList, setTeamList] = useState([]);
+
+  useEffect(() => {
+    // Función para obtener y actualizar la lista de equipos
+    const fetchTeams = async () => {
+      try {
+        // Obtener la lista de equipos
+        const result = await listTeams();
+
+        console.log(result);
+      } catch (error) {
+        console.error("Error al obtener la lista de equipos:", error);
+      }
+    };
+
+    // Llamar a la función para obtener la lista de equipos
+    fetchTeams();
+  }, []);
+  /* FIN Listar Teams - Roles */
 
   // Contexto Global Datos de Usuario
   const { user, setUser, setIsLogged } = useGlobalContext();
@@ -39,6 +65,11 @@ const Home = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
+      <Modal className="text-dark text-xl bg-secondary">
+        <Text>
+          Hola
+        </Text>
+      </Modal>
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
@@ -53,6 +84,16 @@ const Home = () => {
                 <Text className="text-2xl font-psemibold text-black">
                   {user?.username}
                 </Text>
+                <View>
+                  {teamList.map((team) => (
+                    <Text
+                      className="text-xs font-pregular text-black"
+                      key={team.$id}
+                    >
+                      {team.name}
+                    </Text>
+                  ))}
+                </View>
               </View>
 
               <View className="mt-1.5">

@@ -44,7 +44,7 @@ const Create = () => {
 
   const submit = async () => {
     if (!form.prompt || !form.title || !form.thumbnail || !form.video) {
-      return Alert.alert("Please fill in all the fields");
+      return Alert.alert("Rellene todos los campos");
     }
 
     setUploading(true);
