@@ -36,7 +36,7 @@ const VideoCard = ({
   const [editingPlato, setEditingPlato] = useState(null);
   const [editingText, setEditingText] = useState("");
   const [editingImage, setEditingImage] = useState(null);
-  const [platos, setPlato] = useState(video.title);
+  const [platos, setPlatos] = useState([]);
   const [play, setPlay] = useState(false);
   const [isInfoVisible, setIsInfoVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -56,21 +56,27 @@ const VideoCard = ({
   };
   const [ingredients, setIngredients] = useState([]);
 
-  // Llamar a getAllIngredients dentro del useEffect
   useEffect(() => {
     fetchTasks();
-    getAllIngredientsAqui(); // Llamar a getAllIngredients
+    getAllIngredientsAqui();
   }, []);
 
   const fetchTasks = async () => {
-    const platosList = await getAllPosts();
-    setPlato(platosList);
+    try {
+      const platosList = await getAllPosts();
+      setPlatos(platosList);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
   };
 
-  // Agregar la función getAllIngredients
   const getAllIngredientsAqui = async () => {
-    const ingredientsList = await getAllIngredients(); // Cambiar 'getAllIngredients' por el nombre correcto de tu función
-    setIngredients(ingredientsList); // Asumiendo que 'ingredientsList' es el nombre de tu estado para los ingredientes
+    try {
+      const ingredientsList = await getAllIngredients();
+      setIngredients(ingredientsList);
+    } catch (error) {
+      console.error("Error fetching ingredients:", error);
+    }
   };
 
   const startEditing = (video) => {
@@ -167,7 +173,6 @@ const VideoCard = ({
                   </Text>
                 </View>
                 <View className="flex flex-column px-2 py-1 w-full">
-                  
                   {platos.map((plato) => (
                     <View key={plato.$id}>
                       {plato.title === title && (
