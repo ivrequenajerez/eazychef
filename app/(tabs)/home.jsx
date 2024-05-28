@@ -6,6 +6,7 @@ import {
   RefreshControl,
   Alert,
   Modal,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -25,28 +26,10 @@ import VideoCard from "../../components/VideoCard";
 
 import { useGlobalContext } from "../../context/GlobalProvider";
 
+import { Picker } from "@react-native-picker/picker";
+
 const Home = () => {
-  /* Listar Teams - Roles */
-  const [teamList, setTeamList] = useState([]);
-
-  useEffect(() => {
-    // Función para obtener y actualizar la lista de equipos
-    const fetchTeams = async () => {
-      try {
-        // Obtener la lista de equipos
-        const result = await listTeams();
-
-        console.log(result);
-      } catch (error) {
-        console.error("Error al obtener la lista de equipos:", error);
-      }
-    };
-
-    // Llamar a la función para obtener la lista de equipos
-    fetchTeams();
-  }, []);
-  /* FIN Listar Teams - Roles */
-
+  
   // Contexto Global Datos de Usuario
   const { user, setUser, setIsLogged } = useGlobalContext();
 
@@ -63,13 +46,28 @@ const Home = () => {
     setRefreshing(false);
   };
 
+  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [roles, setRoles] = useState([]);
+
   return (
     <SafeAreaView className="bg-primary h-full">
-      <Modal className="text-dark text-xl bg-secondary">
-        <Text>
-          Hola
-        </Text>
-      </Modal>
+      {/*<View>
+        <Modal
+          visible={isModalVisible}
+          onRequestClose={() => setIsModalVisible(false)}
+          animationType="slide"
+          transparent={true}
+        >
+          <View className="flex-1 justify-center items-center w-full p-1 ">
+            <View className="bg-white p-5 rounded-lg shadow-lg flex w-full flex-row justify-center items-center border border-dark">
+              <Text className="font-pmedium text-sm text-dark-200">
+                
+              </Text>
+              
+            </View>
+          </View>
+        </Modal>
+      </View>*/}
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
@@ -84,16 +82,6 @@ const Home = () => {
                 <Text className="text-2xl font-psemibold text-black">
                   {user?.username}
                 </Text>
-                <View>
-                  {teamList.map((team) => (
-                    <Text
-                      className="text-xs font-pregular text-black"
-                      key={team.$id}
-                    >
-                      {team.name}
-                    </Text>
-                  ))}
-                </View>
               </View>
 
               <View className="mt-1.5">

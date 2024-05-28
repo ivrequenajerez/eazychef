@@ -140,6 +140,7 @@ const Create = () => {
           handleChangeText={(e) => setForm({ ...form, prompt: e })}
           otherStyles="mt-7"
         />
+        {/* añadir ingredientes listando todos con la posibilidad de seleccionarlos para agregarlo */}
         <CustomButton
           title="Publicar"
           handlePress={submit}

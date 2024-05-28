@@ -12,7 +12,14 @@ import { ResizeMode, Video } from "expo-av";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
 import * as ImagePicker from "expo-image-picker";
-import { deletePlato, getAllPosts, updatePlato } from "../lib/appwrite";
+import {
+  deletePlato,
+  getAllPosts,
+  updatePlato,
+  fetchPlatos,
+  fetchIngredientes,
+  getAllIngredients,
+} from "../lib/appwrite";
 import { Link, router } from "expo-router";
 
 const VideoCard = ({
@@ -21,7 +28,9 @@ const VideoCard = ({
     title,
     thumbnail,
     video,
+    prompt,
     creator: { username, avatar },
+    ingredientes: { nombre_ingrediente },
   },
 }) => {
   const [editingPlato, setEditingPlato] = useState(null);
@@ -29,12 +38,14 @@ const VideoCard = ({
   const [editingImage, setEditingImage] = useState(null);
   const [platos, setPlato] = useState(video.title);
   const [play, setPlay] = useState(false);
+  const [isInfoVisible, setIsInfoVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [form, setForm] = useState({
     title,
     video: null,
     thumbnail: null,
+    prompt,
   });
 
   const handleDelete = async () => {
@@ -43,14 +54,23 @@ const VideoCard = ({
 
     // Aquí podemos agregar lógica adicional, como actualizar la lista de platos en el estado padre
   };
+  const [ingredients, setIngredients] = useState([]);
 
+  // Llamar a getAllIngredients dentro del useEffect
   useEffect(() => {
     fetchTasks();
+    getAllIngredientsAqui(); // Llamar a getAllIngredients
   }, []);
 
   const fetchTasks = async () => {
     const platosList = await getAllPosts();
     setPlato(platosList);
+  };
+
+  // Agregar la función getAllIngredients
+  const getAllIngredientsAqui = async () => {
+    const ingredientsList = await getAllIngredients(); // Cambiar 'getAllIngredients' por el nombre correcto de tu función
+    setIngredients(ingredientsList); // Asumiendo que 'ingredientsList' es el nombre de tu estado para los ingredientes
   };
 
   const startEditing = (video) => {
@@ -104,24 +124,74 @@ const VideoCard = ({
     }
   };
 
-  {
-    /** 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const ir = async () => {
-    setIsSubmitting(true);
-    try {
-      // Ir a Home
-      router.replace("vent/infoPlato");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    }
-  };
-*/
-  }
-
   return (
     <View className="flex-col items-center px-4 mb-14 ">
       <View className="flex-row gap-3 items-start">
+        {/* Modal Para Editar Ingrediente */}
+        <View>
+          <Modal
+            visible={isInfoVisible}
+            onRequestClose={() => setIsInfoVisible(false)}
+            animationType="slide"
+            transparent={true}
+          >
+            <View className="flex-1 justify-center items-center w-full p-1 ">
+              <View className="bg-white p-5 rounded-lg shadow-lg flex w-full justify-center items-center border border-dark">
+                <View className="flex flex-row w-full justify-end">
+                  <TouchableOpacity onPress={() => setIsInfoVisible(false)}>
+                    <Image
+                      source={icons.cerrar}
+                      resizeMode="contain"
+                      className="w-4 h-4"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View className="flex flex-row px-2 py-2">
+                  <Text className="text-text font-psemibold text-xl">
+                    Información sobre el plato
+                  </Text>
+                </View>
+                <View className="flex flex-row px-2 pt-5 w-full">
+                  <Text className="text-text font-psemibold text-lg">
+                    {title}
+                  </Text>
+                </View>
+                <View className="flex flex-row px-2 py-1 w-full">
+                  <Text className="text-text font-pregular text-base">
+                    {prompt}
+                  </Text>
+                </View>
+                <View className="flex flex-row px-2 pt-5 w-full">
+                  <Text className="text-text font-psemibold text-lg">
+                    Ingredientes:
+                  </Text>
+                </View>
+                <View className="flex flex-column px-2 py-1 w-full">
+                  
+                  {platos.map((plato) => (
+                    <View key={plato.$id}>
+                      {plato.title === title && (
+                        <View>
+                          {plato.ingredientes.map((ingrediente, index) => (
+                            <View
+                              key={index}
+                              className="flex flex-row px-2 py-1 w-full"
+                            >
+                              <Text className="text-text font-pregular text-sm">
+                                {ingrediente.nombre_ingrediente}
+                              </Text>
+                            </View>
+                          ))}
+                        </View>
+                      )}
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </View>
+          </Modal>
+        </View>
+
         <View className="justify-center items-center flex-row flex-1">
           {/* Imagen de Perfil */}
           <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center p-0.5 ">
@@ -132,22 +202,35 @@ const VideoCard = ({
             />
           </View>
           {/* Info de Plato y persona que lo publicó */}
-            <TouchableOpacity className="justify-center flex-1 ml-3 gap-y-1">
-              {/* Título */}
-              <Text
-                className="text-text font-psemibold text-sm"
-                numberOfLines={1}
-              >
-                {title}
-              </Text>
-              {/* Nombre de Usuario */}
-              <Text
-                className="text-xs text-dark-100 font-pregular"
-                numberOfLines={1}
-              >
-                {username}
-              </Text>
-            </TouchableOpacity>
+          <TouchableOpacity className="justify-center flex-1 ml-3 gap-y-1">
+            {/* Título */}
+            <Text
+              className="text-text font-psemibold text-sm"
+              numberOfLines={1}
+            >
+              {title}
+            </Text>
+            {/* Nombre de Usuario */}
+            <Text
+              className="text-xs text-dark-100 font-pregular"
+              numberOfLines={1}
+            >
+              {username}
+            </Text>
+          </TouchableOpacity>
+          {/* Icono de Más Info */}
+          <TouchableOpacity
+            onPress={() => setIsInfoVisible(true)}
+            className="space-x-2 pr-5"
+          >
+            {/* ... Agregar: Si setIsModalVisible(true) Entonces poner el fondo de /home color oscuro */}
+            <Image
+              source={icons.info}
+              resizeMode="contain"
+              style={{ tintColor: "#524439" }}
+              className="w-10 h-10"
+            />
+          </TouchableOpacity>
           {/* Icono de Editar */}
           <TouchableOpacity onPress={() => setIsModalVisible(true)}>
             {/* ... Agregar: Si setIsModalVisible(true) Entonces poner el fondo de /home color oscuro */}

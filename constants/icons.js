@@ -15,6 +15,7 @@ import mas from "../assets/icons/mas.png";
 import menos from "../assets/icons/menos.png";
 import cerrar from "../assets/icons/cerrar.png";
 import edit from "../assets/icons/edit.png";
+import info from "../assets/icons/info.png";
 
 export default {
   play,
@@ -34,4 +35,5 @@ export default {
   menos,
   cerrar,
   edit,
+  info,
 };

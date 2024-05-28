@@ -1,5 +1,5 @@
 import { View, ScrollView, Text, Image, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { images } from "../../constants";
@@ -11,16 +11,13 @@ import { useGlobalContext } from "../../context/GlobalProvider";
 
 import { createUser } from "../../lib/appwrite";
 
-import { listTeams } from "../../lib/appwrite";
-
 const SignUp = () => {
-
   const { setUser, setIsLogged } = useGlobalContext();
   const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-    Rol: "",
+    username: '',
+    email: '',
+    password: '',
+    Rol: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -33,23 +30,23 @@ const SignUp = () => {
     setIsSubmitting(true);
 
     try {
-      const result = await createUser(
-        form.email,
-        form.password,
-        form.username,
-        form.Rol
-      );
+
+      const result = await createUser(form.email, form.password, form.username, form.Rol);
 
       setUser(result);
       setIsLogged(true);
 
       // Ir a Home
       router.replace("/home");
+
     } catch (error) {
-      Alert.alert("Error", error.message);
+
+      Alert.alert('Error', error.message);
+
     } finally {
       setIsSubmitting(false);
     }
+
   };
 
   return (

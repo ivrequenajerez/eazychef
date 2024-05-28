@@ -60,22 +60,25 @@ const Bookmark = () => {
   {
     /* 'Crear Ingrediente' */
   }
-  
+
   const uploadImage = async (selectType) => {
-   
-    {/* Cambiar a que se pueda subir haciendo una foto con la cámara en el momento */}
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: selectType === 'image' ? ImagePicker.MediaTypeOptions.Images : ImagePicker.MediaTypeOptions.Videos,
-        aspect: [1, 1],
-        quality: 1,
-      });
+    {
+      /* Cambiar a que se pueda subir haciendo una foto con la cámara en el momento */
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes:
+        selectType === "image"
+          ? ImagePicker.MediaTypeOptions.Images
+          : ImagePicker.MediaTypeOptions.Videos,
+      aspect: [1, 1],
+      quality: 1,
+    });
 
-      if (!result.canceled) {
-        if (selectType === "image") {
-          setForm({ ...form, imagen_ingrediente: result.assets[0] });
-        }
+    if (!result.canceled) {
+      if (selectType === "image") {
+        setForm({ ...form, imagen_ingrediente: result.assets[0] });
       }
-
+    }
   };
   const submit = async () => {
     if (
@@ -100,10 +103,12 @@ const Bookmark = () => {
       });
 
       Alert.alert("Genial", "Ítem subido :)");
-
     } catch (error) {
       if (error.message.includes("the current user is not authorized")) {
-        Alert.alert("No tiene permiso", "No estás autorizado para crear un producto");
+        Alert.alert(
+          "No tiene permiso",
+          "No estás autorizado para crear un producto"
+        );
       } else {
         Alert.alert("Error al crear el producto", error.message);
       }
@@ -124,6 +129,7 @@ const Bookmark = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
+      
       {elementVisible ? (
         <FlatList
           data={posts}

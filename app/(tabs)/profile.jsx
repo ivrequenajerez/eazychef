@@ -1,9 +1,9 @@
-import { View, FlatList, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, FlatList, Image, TouchableOpacity, Text } from "react-native";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import EmptyState from "../../components/EmptyState";
-import { getUserPosts, signOut } from "../../lib/appwrite";
+import { getUserPosts, listTeams, signOut } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 import InfoBox from "../../components/InfoBox";
@@ -14,6 +14,26 @@ import { icons } from "../../constants";
 import { router } from "expo-router";
 
 const Profile = () => {
+  const [teamList, setTeamList] = useState([]);
+
+  // Efecto para obtener la lista de equipos al cargar el componente
+  useEffect(() => {
+    // Función para obtener y actualizar la lista de equipos
+    const fetchTeams = async () => {
+      try {
+        // Obtener la lista de equipos
+        const result = await listTeams();
+        // Actualizar el estado con la lista de equipos obtenida
+        setTeamList(result.teams);
+      } catch (error) {
+        console.error("Error al obtener la lista de equipos:", error);
+      }
+    };
+
+    // Llamar a la función para obtener la lista de equipos
+    fetchTeams();
+  }, []);
+
   const { user, setUser, setIsLogged } = useGlobalContext();
   const { data: posts } = useAppwrite(() => getUserPosts(user.$id));
 
@@ -56,12 +76,14 @@ const Profile = () => {
               containerStyles="mt-5"
               titleStyles="title-lg"
             />
-            <View className="mt-5 flex-row">
-              <InfoBox
-                title={user?.Rol}
-                containerStyles="mr-10"
-                titleStyles="font-pbold"
-              />
+            <View className="w-40 justify-left mt-5 flex-row">
+              <View className="w-300 px-3 ">
+                {teamList.map((team) => (
+                  <Text className="font-pbold" key={team.$id}>
+                    {team.name}
+                  </Text>
+                ))}
+              </View>
               <InfoBox
                 title={posts.length || 0}
                 subtitle="Platos"
