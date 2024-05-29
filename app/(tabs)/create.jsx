@@ -54,7 +54,7 @@ const Create = () => {
         ...form, userId: user.$id
       })
 
-      Alert.alert('Genial', 'Ítem subido :)')
+      Alert.alert('Plato Añadido', 'El plato se ha añadido correctamente')
       router.push('/home')
     } catch (error) {
       Alert.alert('Error', error.message)

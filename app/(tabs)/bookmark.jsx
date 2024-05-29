@@ -102,7 +102,7 @@ const Bookmark = () => {
         userId: user.$id,
       });
 
-      Alert.alert("Genial", "Ítem subido :)");
+      Alert.alert("Producto Añadido", "El producto se ha añadido correctamente");
     } catch (error) {
       if (error.message.includes("the current user is not authorized")) {
         Alert.alert(

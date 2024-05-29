@@ -170,7 +170,7 @@ const IngredienteCard = ({
         userId: user.$id,
       });
 
-      Alert.alert("Genial", "Ítem subido :)");
+      Alert.alert("Ítem subido", "El ítem se ha subido correctamente");
     } catch (error) {
       Alert.alert("Justo Aquí!", error.message);
     } finally {
@@ -356,7 +356,7 @@ const IngredienteCard = ({
                     <View>
                       {/* Nombre del Producto */}
                       <FormField
-                        placeholder={nombre_ingrediente}
+                        placeholder="Nuevo nombre"
                         value={editingText}
                         handleChangeText={setEditingText}
                         otherStyles="w-60 pr-2 mt-2"
@@ -364,7 +364,7 @@ const IngredienteCard = ({
 
                       {/* Categoría del Producto */}
                       <FormField
-                        placeholder={categoria}
+                        placeholder="Nueva categoría"
                         value={editingTextCat}
                         handleChangeText={setEditingTextCat}
                         otherStyles="w-60 pr-2 mt-2"
@@ -372,7 +372,7 @@ const IngredienteCard = ({
 
                       {/* Cantidad del Producto */}
                       <FormField
-                        placeholder={cantidad}
+                        placeholder="Nueva cantidad"
                         value={editingTextCant}
                         handleChangeText={setEditingTextCant}
                         otherStyles="w-60 pr-2 mt-2"
@@ -380,7 +380,7 @@ const IngredienteCard = ({
 
                       {/* Cantidad medidas del Producto */}
                       <FormField
-                        placeholder={medida}
+                        placeholder="Nueva medida"
                         value={editingTextMed}
                         handleChangeText={setEditingTextMed}
                         otherStyles="w-60 pr-2 mt-2"
@@ -388,7 +388,7 @@ const IngredienteCard = ({
 
                       {/* Precio del Producto */}
                       <FormField
-                        placeholder={precio_unidad}
+                        placeholder="Nuevo precio"
                         value={editingTextPrec}
                         handleChangeText={setEditingTextPrec}
                         otherStyles="w-60 pr-2 mt-2"
@@ -396,7 +396,7 @@ const IngredienteCard = ({
 
                       {/* Ubicación del Producto en Almacén físico */}
                       <FormField
-                        placeholder={ubicacion_almacen}
+                        placeholder="Nueva ubicación"
                         value={editingTextUbi}
                         handleChangeText={setEditingTextUbi}
                         otherStyles="w-60 pr-2 mt-2"
