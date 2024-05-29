@@ -14,39 +14,43 @@ import { createUser } from "../../lib/appwrite";
 const SignUp = () => {
   const { setUser, setIsLogged } = useGlobalContext();
   const [form, setForm] = useState({
-    username: '',
-    email: '',
-    password: '',
-    Rol: ''
+    username: "",
+    email: "",
+    password: "",
+    Rol: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Función asíncrona submit al hacer click en el botón de Registrarse
   const submit = async () => {
-    // Si no se rellena, salta error
+    // Revisa si todos los campos están rellenos
+    // Si alguno de los campos (username, email, password, Rol) están vacíos, muestra un alerta
     if (!form.username || !form.email || !form.password || !form.Rol) {
       Alert.alert("Error", "Por favor rellena todos los campos");
     }
 
+    // se asigna a true indicando que se ha iniciado un proceso de envío
     setIsSubmitting(true);
 
     try {
-
-      const result = await createUser(form.email, form.password, form.username, form.Rol);
+      // Intenta crear un nuevo usuario con la información brindada en el formulario
+      // 'createUser' es una función que se encuentra en el archivo 'appwrite.js' en la carpeta 'lib'
+      const result = await createUser(
+        form.email,
+        form.password,
+        form.username,
+        form.Rol
+      );
 
       setUser(result);
       setIsLogged(true);
 
-      // Ir a Home
       router.replace("/home");
-
     } catch (error) {
-
-      Alert.alert('Error', error.message);
-
+      Alert.alert("Error", error.message);
     } finally {
       setIsSubmitting(false);
     }
-
   };
 
   return (
