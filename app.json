@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -14,7 +14,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "package": "com.ianvalentino.eazychef"
+      "package": "com.ianvalentino.eazychef",
+      "bundleIdentifier": "com.ianvalentino.eazychef"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,20 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "2cab24c0-cb47-4db3-990f-f73dd1b02356"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/2cab24c0-cb47-4db3-990f-f73dd1b02356"
+    }
   }
 }
