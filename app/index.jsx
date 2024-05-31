@@ -20,7 +20,7 @@ export default function App() {
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="w-full justify-center items-center min-h-[85vh] px-4">
           <Image
-            source={images.logo}
+            source={images.logoOlivo}
             className="w-[150px] h-[84px]"
             resizeMode="contain"
           />
@@ -31,15 +31,14 @@ export default function App() {
           />
           <View className="relative mt-5">
             <Text className="text-3xl text-black font-bold text-center">
-              Una gestión organizada del restaurante con{" "}
-              <Text className="text-secondary-100">Eazy Chef</Text>
+              Una gestión organizada de{" "}
             </Text>
           </View>
-
-          <Text className="text-sm font-pregular text-text mt-7 text-center">
-            Donde la creatividad se encuentra con la innovación: un
-            viaje de exploración ilimitada con Eazy Chef
-          </Text>
+          <View className="relative mt-2">
+            <Text className="text-3xl text-black font-bold text-center text-olivorojo">
+              El Olivo de la Cala
+            </Text>
+          </View>
 
           <CustomButton
             title="Continúa con tu Email"
@@ -47,7 +46,6 @@ export default function App() {
             handlePress={() => router.push("/sign-in")}
             containerStyles="w-full mt-7"
           />
-
         </View>
       </ScrollView>
     </SafeAreaView>

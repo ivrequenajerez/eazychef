@@ -136,14 +136,14 @@ const Bookmark = () => {
           keyExtractor={(item) => item.$id}
           renderItem={({ item }) => <IngredienteCard image={item} />}
           ListHeaderComponent={() => (
-            <View className="my-6 px-4 space-y-6 mb-[0px] pb-[0px] ">
-              {/* Hacer que al scrollear el botón de añadir se quede fijo arriba... */}
+            <View className="my-6 px-4 space-y-6 mb-[0px] ">
+              {/* Hacer que al scrollear el botón de plus se quede fijo arriba... */}
               <View className="flex-row justify-end items-center mr-6">
                 <TouchableOpacity onPress={() => setElementVisible(false)}>
                   <Image
                     source={icons.plus}
                     className="w-[36px] h-[36px]"
-                    tintColor={"#995840"}
+                    tintColor={"#B01716"}
                   />
                 </TouchableOpacity>
               </View>
@@ -155,7 +155,6 @@ const Bookmark = () => {
                   Gestiona el stock que hay en tu almacén 📦
                 </Text>
               </View>
-              {/** Añadir búsqueda de ingredientes por palabras clave */}
             </View>
           )}
           ListEmptyComponent={() => (

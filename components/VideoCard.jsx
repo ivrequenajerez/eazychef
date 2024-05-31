@@ -4,10 +4,9 @@ import {
   Image,
   TouchableOpacity,
   Modal,
-  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { icons, images } from "../constants";
+import { icons } from "../constants";
 import { ResizeMode, Video } from "expo-av";
 import CustomButton from "./CustomButton";
 import FormField from "./FormField";
@@ -16,11 +15,8 @@ import {
   deletePlato,
   getAllPosts,
   updatePlato,
-  fetchPlatos,
-  fetchIngredientes,
   getAllIngredients,
 } from "../lib/appwrite";
-import { Link, router } from "expo-router";
 
 const VideoCard = ({
   video: {
@@ -211,7 +207,7 @@ const VideoCard = ({
             {/* Título */}
             <Text
               className="text-text font-psemibold text-sm"
-              numberOfLines={1}
+              numberOfLines={2}
             >
               {title}
             </Text>
@@ -242,7 +238,7 @@ const VideoCard = ({
             <Image
               source={icons.edit}
               resizeMode="contain"
-              style={{ tintColor: "#D68C45" }}
+              style={{ tintColor: "#B01716" }}
               className="w-10 h-10"
             />
           </TouchableOpacity>

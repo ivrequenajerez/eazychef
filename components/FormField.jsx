@@ -17,7 +17,7 @@ const FormField = ({
     <View className={`space-y-2 ${otherStyles}`}>
       <Text className="text-base text-dark-200 font-pmedium">{title}</Text>
 
-      <View className="border-2 border-dark-200 w-full h-16 px-4 bg-primary-200 rounded-2xl focus:border-secondary items-center flex-row">
+      <View className="border-2 border-dark-200 w-full h-16 px-4 bg-olivoclaro rounded-2xl focus:border-olivorojo items-center flex-row">
         <TextInput
           className="flex-1 text-dark font-psemibold text-base"
           value={value}

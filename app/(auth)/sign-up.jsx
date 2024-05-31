@@ -59,7 +59,7 @@ const SignUp = () => {
         <View className="w-full justify-center min-h-[82vh] px-4 my-6">
           <View className="w-full items-center">
             <Image
-              source={images.logo}
+              source={images.logoOlivo}
               className="w-[250px] h-[65px]"
               resizeMode="contain"
             />
@@ -111,7 +111,7 @@ const SignUp = () => {
             </Text>
             <Link
               href="/sign-in"
-              className="text-lg font-psemibold text-secondary"
+              className="text-lg font-psemibold text-black underline"
             >
               Inicia Sesión
             </Link>

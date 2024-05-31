@@ -94,12 +94,12 @@ const Create = () => {
                 className="w-full h-64 rounded-2xl"
               />
             ) : (
-              <View className="w-full h-16 px-4 bg-secondary-100 rounded-2xl justify-center items-center border-2 border-black-200 flex-row space-x-2">
+              <View className="w-full h-16 px-4 rounded-2xl justify-center items-center border-2 border-black-200 flex-row space-x-2">
                 <Image
                   source={icons.upload}
                   resizeMode="contain"
                   className="w-5 h-5"
-                  style={{ tintColor: "#524439" }}
+                  style={{ tintColor: "#B01716" }}
                 />
                 <Text className="text-sm text-dark-100 font-pmedium">
                   Escoge un archivo
@@ -120,13 +120,13 @@ const Create = () => {
                 resizeMode={ResizeMode.COVER}
               />
             ) : (
-              <View className="w-full h-40 px-4 bg-secondary-100 rounded-2xl justify-center items-center">
-                <View className="w-14 h-14 border border-dashed border-primary-100 justify-center items-center">
+              <View className="w-full h-40 px-4 border border-dashed border-black rounded-2xl justify-center items-center">
+                <View className="w-14 h-14 border border-dashed border-olivorojo justify-center items-center">
                   <Image
                     source={icons.upload}
                     resizeMode="contain"
                     className="w-1/2 h-1/2"
-                    style={{ tintColor: "#524439" }}
+                    style={{ tintColor: "#B01716" }}
                   />
                 </View>
               </View>

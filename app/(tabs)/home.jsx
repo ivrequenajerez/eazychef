@@ -51,23 +51,6 @@ const Home = () => {
 
   return (
     <SafeAreaView className="bg-primary h-full">
-      {/*<View>
-        <Modal
-          visible={isModalVisible}
-          onRequestClose={() => setIsModalVisible(false)}
-          animationType="slide"
-          transparent={true}
-        >
-          <View className="flex-1 justify-center items-center w-full p-1 ">
-            <View className="bg-white p-5 rounded-lg shadow-lg flex w-full flex-row justify-center items-center border border-dark">
-              <Text className="font-pmedium text-sm text-dark-200">
-                
-              </Text>
-              
-            </View>
-          </View>
-        </Modal>
-      </View>*/}
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
@@ -86,8 +69,8 @@ const Home = () => {
 
               <View className="mt-1.5">
                 <Image
-                  source={images.logoSmall}
-                  className="w-10 h-10"
+                  source={images.logoOlivo}
+                  className="w-30 h-10"
                   resizeMode="contain"
                 />
               </View>

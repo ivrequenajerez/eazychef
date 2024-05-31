@@ -233,8 +233,18 @@ const IngredienteCard = ({
     }
   };
 
+  const MemoizedImage = React.memo(function MemoizedImage({ imagen_ingrediente }) {
+    return (
+      <Image
+        source={{ uri: imagen_ingrediente }}
+        className="w-full h-full rounded-lg"
+        resizeMode="cover"
+      />
+    );
+  });
+
   return (
-    <SafeAreaView className="flex-col px-4 py-0 my-0 mb-[-60px]">
+    <SafeAreaView className="flex-col px-4 my-[-30px]">
       {/* + Info del Producto - Ventana Oculta por defecto */}
       {elementVisible ? (
         <View className="px-4 my-0 border border-secondary-200 rounded-xl px-4 py-5">
@@ -306,7 +316,7 @@ const IngredienteCard = ({
               <Image
                 source={icons.edit}
                 resizeMode="contain"
-                style={{ tintColor: "#D68C45" }}
+                style={{ tintColor: "#B01716" }}
                 className="w-10 h-10"
               />
             </TouchableOpacity>
@@ -443,23 +453,19 @@ const IngredienteCard = ({
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => setElementVisible(true)}
-          className="flex-row gap-3 items-start items-center"
+          className="flex-row gap-3 items-start items-center pb-[10px] border-b border-olivorojo [h-80px] w-full px-4"
         >
           <View className="justify-center items-center flex-row flex-1">
-            <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center ">
+            <View className="w-[66px] h-[66px] rounded-lg border border-olivorojo justify-center items-center ">
               {/* Foto del Ingrediente */}
-              <Image
-                source={{ uri: imagen_ingrediente }}
-                className="w-full h-full rounded-lg"
-                resizeMode="cover"
-              />
+              <MemoizedImage imagen_ingrediente={imagen_ingrediente} />
             </View>
 
             <View className="justify-center flex-1 ml-3 gap-y-1">
               {/* Nombre del Ingrediente*/}
               <Text
                 className="text-text font-psemibold text-sm"
-                numberOfLines={1}
+                numberOfLines={2}
               >
                 {nombre_ingrediente}
               </Text>
