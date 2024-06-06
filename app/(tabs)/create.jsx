@@ -71,7 +71,7 @@ const Create = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-white h-full">
       <ScrollView className="px-4 my-6">
         <Text className="text-2xl text-text font-psemibold">Nuevo Plato para la Carta</Text>
         <FormField
@@ -99,7 +99,7 @@ const Create = () => {
                   source={icons.upload}
                   resizeMode="contain"
                   className="w-5 h-5"
-                  style={{ tintColor: "#B01716" }}
+                  style={{ tintColor: "#658E93" }}
                 />
                 <Text className="text-sm text-dark-100 font-pmedium">
                   Escoge un archivo
@@ -121,12 +121,12 @@ const Create = () => {
               />
             ) : (
               <View className="w-full h-40 px-4 border border-dashed border-black rounded-2xl justify-center items-center">
-                <View className="w-14 h-14 border border-dashed border-olivorojo justify-center items-center">
+                <View className="w-14 h-14 border border-dashed border-losenebros justify-center items-center">
                   <Image
                     source={icons.upload}
                     resizeMode="contain"
                     className="w-1/2 h-1/2"
-                    style={{ tintColor: "#B01716" }}
+                    style={{ tintColor: "#658E93" }}
                   />
                 </View>
               </View>

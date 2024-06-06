@@ -3,8 +3,9 @@ import thumbnail from "../assets/images/thumbnail.png";
 import cards from "../assets/images/cards.png";
 import path from "../assets/images/path.png";
 import logo from "../assets/images/logo.png";
-import logoOlivo from "../assets/images/logo-olivo.png";
+import logoEnebros from "../assets/images/logo-enebros.png";
 import logoSmall from "../assets/images/logo-small.png";
+import logoSmallEnebros from "../assets/images/logo-enebros-p.png";
 import empty from "../assets/images/empty.png";
 
-export default { profile, thumbnail, cards, path, logo, logoOlivo, logoSmall, empty };
+export default { profile, thumbnail, cards, path, logo, logoEnebros, logoSmallEnebros, logoSmall, empty };

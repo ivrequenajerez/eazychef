@@ -128,7 +128,7 @@ const Bookmark = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-white h-full">
       
       {elementVisible ? (
         <FlatList
@@ -143,7 +143,7 @@ const Bookmark = () => {
                   <Image
                     source={icons.plus}
                     className="w-[36px] h-[36px]"
-                    tintColor={"#B01716"}
+                    tintColor={"#658E93"}
                   />
                 </TouchableOpacity>
               </View>

@@ -16,8 +16,8 @@ module.exports = {
           200: "#F1B98C",
           'with-opacity': 'rgba(255, 247, 239, 0.5)',
         },
-        olivorojo: {
-          DEFAULT: "#B01716",
+        losenebros: {
+          DEFAULT: "#658E93",
         },
         text: {
           DEFAULT: "#32211C"

@@ -247,7 +247,7 @@ const IngredienteCard = ({
     <SafeAreaView className="flex-col px-4 my-[-30px]">
       {/* + Info del Producto - Ventana Oculta por defecto */}
       {elementVisible ? (
-        <View className="px-4 my-0 border border-secondary-200 rounded-xl px-4 py-5">
+        <View className="my-0 border border-secondary-200 rounded-xl px-4 py-5">
           {/* Botón para Cerrar Ventana de +info de Ingrediente */}
           <TouchableOpacity
             className="items-end "
@@ -316,7 +316,7 @@ const IngredienteCard = ({
               <Image
                 source={icons.edit}
                 resizeMode="contain"
-                style={{ tintColor: "#B01716" }}
+                style={{ tintColor: "#658E93" }}
                 className="w-10 h-10"
               />
             </TouchableOpacity>
@@ -337,7 +337,7 @@ const IngredienteCard = ({
             >
               <View className="flex-1 justify-center items-center w-full p-1 ">
                 {editingIngrediente && (
-                  <View className="bg-primary p-5 rounded-lg shadow-lg flex w-full flex-row justify-center items-center border border-dark">
+                  <View className="bg-white p-5 rounded-lg shadow-lg flex w-full flex-row justify-center items-center border border-dark">
                     {/* Imagen del producto */}
                     <TouchableOpacity
                       /* Aquí Debe hacer click y abrir la cámara para cambiar la imagen del producto */
@@ -356,7 +356,7 @@ const IngredienteCard = ({
                             source={icons.upload}
                             resizeMode="contain"
                             className="w-20 h-20 rounded-xl"
-                            style={{ tintColor: "#524439" }}
+                            style={{ tintColor: "#658E93" }}
                           />
                         </View>
                       )}
@@ -453,10 +453,10 @@ const IngredienteCard = ({
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => setElementVisible(true)}
-          className="flex-row gap-3 items-start items-center pb-[10px] border-b border-olivorojo [h-80px] w-full px-4"
+          className="flex-row gap-3 items-center pb-[10px] border-b border-losenebros [h-80px] w-full px-4"
         >
           <View className="justify-center items-center flex-row flex-1">
-            <View className="w-[66px] h-[66px] rounded-lg border border-olivorojo justify-center items-center ">
+            <View className="w-[66px] h-[66px] rounded-lg border border-losenebros justify-center items-center ">
               {/* Foto del Ingrediente */}
               <MemoizedImage imagen_ingrediente={imagen_ingrediente} />
             </View>

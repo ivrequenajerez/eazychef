@@ -16,11 +16,11 @@ export default function App() {
   return (
     // Color de fondo sea el color "primary"
     // altura completa
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-white h-full">
       <ScrollView contentContainerStyle={{ height: "100%" }}>
         <View className="w-full justify-center items-center min-h-[85vh] px-4">
           <Image
-            source={images.logoOlivo}
+            source={images.logoEnebros}
             className="w-[150px] h-[84px]"
             resizeMode="contain"
           />
@@ -35,8 +35,8 @@ export default function App() {
             </Text>
           </View>
           <View className="relative mt-2">
-            <Text className="text-3xl text-black font-bold text-center text-olivorojo">
-              El Olivo de la Cala
+            <Text className="text-3xl font-bold text-center text-losenebros">
+              Los Enebros
             </Text>
           </View>
 

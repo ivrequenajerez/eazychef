@@ -50,7 +50,7 @@ const Home = () => {
   const [roles, setRoles] = useState([]);
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-white h-full">
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
@@ -69,7 +69,7 @@ const Home = () => {
 
               <View className="mt-1.5">
                 <Image
-                  source={images.logoOlivo}
+                  source={images.logoSmallEnebros}
                   className="w-30 h-10"
                   resizeMode="contain"
                 />

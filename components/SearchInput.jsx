@@ -32,7 +32,7 @@ const SearchInput = ({ initialQuery }) => {
           source={icons.search}
           className="w-5 h-5"
           resizeMode="contain"
-          style={{ tintColor: "#524439" }}
+          style={{ tintColor: "#658E93" }}
         />
       </TouchableOpacity>
     </View>

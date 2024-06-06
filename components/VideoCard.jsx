@@ -228,7 +228,7 @@ const VideoCard = ({
             <Image
               source={icons.info}
               resizeMode="contain"
-              style={{ tintColor: "#524439" }}
+              style={{ tintColor: "#365257" }}
               className="w-10 h-10"
             />
           </TouchableOpacity>
@@ -238,7 +238,7 @@ const VideoCard = ({
             <Image
               source={icons.edit}
               resizeMode="contain"
-              style={{ tintColor: "#B01716" }}
+              style={{ tintColor: "#658E93" }}
               className="w-10 h-10"
             />
           </TouchableOpacity>
@@ -316,12 +316,6 @@ const VideoCard = ({
           </View>
         </View>
         <View className="pt-2">
-          {/*<Image
-            source={icons.menu}
-            className="w-6 h-6"
-            resizeMode="contain"
-            style={{ tintColor: "#32211C" }}
-          />*/}
         </View>
       </View>
       {play ? (
