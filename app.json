@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "package": "com.ianvalentino.eazychef",
+      "package": "com.eazy.eazychefe",
       "bundleIdentifier": "com.ianvalentino.eazychef"
     },
     "android": {
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ianvalentino.eazychef"
+      "package": "com.eazy.eazychefe"
     },
     "web": {
       "favicon": "./assets/favicon.png"
