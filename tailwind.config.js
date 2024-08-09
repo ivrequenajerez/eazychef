@@ -8,11 +8,19 @@ module.exports = {
           DEFAULT: "#FFF7EF",
           100: "#FFF1E0",
           200: "#FFE8CC",
+          'with-opacity': 'rgba(255, 247, 239, 1)',
         },
         secondary: {
           DEFAULT: "#D68C45",
           100: "#E4A368",
           200: "#F1B98C",
+          'with-opacity': 'rgba(255, 247, 239, 0.5)',
+        },
+        losenebros: {
+          DEFAULT: "#658E93",
+        },
+        text: {
+          DEFAULT: "#32211C"
         },
         dark: {
           DEFAULT: "#524439",
@@ -43,5 +51,6 @@ module.exports = {
       },
     },
   },
+  variants: {},
   plugins: [],
 };

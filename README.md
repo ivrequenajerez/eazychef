@@ -1,3 +1,4 @@
+
 Aplicación para Proyecto TFG 
 
 ## EazyChef
@@ -171,3 +172,4 @@ Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request p
 ### Licencia
 
 Este proyecto está licenciado bajo los términos de la licencia MIT.
+
